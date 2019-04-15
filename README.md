@@ -28,7 +28,7 @@ Want to select that element? Just select it. Want to style that element? Just st
 </details>
 
 ## Getting started
-It's just a es6 module, so use `import` to _import_ it:
+It's just an es6 module, so use `import` to _import_ it:
 ```js
 import Just from "just.js"; //Or use just.min.js
 const just = new Just();
