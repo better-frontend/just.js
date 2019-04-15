@@ -56,7 +56,7 @@ just
 ## Docs
 To begin, just instantiate the Just class:
 ### <code>new Just( value? ) -> just</code>
-Creates a new instance, and if you provide an element or selector (as `value`), it will call [`just.select`](#codejustselectcode) with that value internally.
+Creates a new instance, and if you provide an element or selector (as `value`), it will call [`just.select`](#justcreate--htmlstring----just) with that value internally.
 
 ### <code>just.create ( HTMLString ) -> just</code>
 Just creates an element from an HTML string. Returns the current `Just`-instance.
