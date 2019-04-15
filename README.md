@@ -41,7 +41,7 @@ just
   .style("color: red;")
   .text("This div was just selected!");
 
-//creating a link
+//Creating a link
 just
 	.create("<a></a>")
 	.text("Click here!")
