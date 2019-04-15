@@ -42,6 +42,10 @@ just
   .text("This div was just selected!");
 
 //creating a link
+just
+	.create("<a></a>")
+	.text("Click here!")
+	.attribute("href", "https://shadylink.com");
 ```
 <br/>
 <br/>
