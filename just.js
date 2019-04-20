@@ -1,26 +1,38 @@
-export default class Just {
+function arrayExtractKey (array, key) {
+	return array
+		.map(item => item[key])
+		.filter(Boolean);
+}
+
+class Just {
 	constructor (element) {
 		const instance = this;
 		this.__ELEMENTS = [];
 		this.__PROXYHANDLER = {
 			get (obj, key) {
-				return instance[key] || instance.__ELEMENTS[key] || obj[key];
+				return instance[key]
+					|| instance.__ELEMENTS[key]
+					|| obj[key]
+					|| instance.select(arrayExtractKey(instance.__ELEMENTS, key));
 			}
 		};
 		if (element) this.select(element);
 	}
 
 	create (html) {
-		const tmp = document.createElement("DIV");
-		tmp.innerHTML = html;
-		return this.select(tmp.firstElementChild);
+		if (html.startsWith("<")) {
+			const tmp = document.createElement("DIV");
+			tmp.innerHTML = html;
+			return this.select(tmp.firstElementChild);
+		} else return this.select(document.createElement(html));
 	}
 
 	select (element) {
+		if (!element) return null;
 		if (typeof element === "string") this.__ELEMENTS = Array.from(document.querySelectorAll(element));
 		else {
 			this.__ELEMENTS.length = 0;
-			this.__ELEMENTS.push(element);
+			this.__ELEMENTS = this.__ELEMENTS.concat(element);
 		}
 		return new Proxy(this, this.__PROXYHANDLER);
 	}
@@ -54,11 +66,30 @@ export default class Just {
 
 	attr (name, value) {return this.attribute(name, value);}
 	attribute (name, value) {
-		return this.each(element => element.setAttribute(name, value));
+		return this.each(element => (value === undefined)
+			? element.getAttribute(name)
+			: element.setAttribute(name, value));
 	}
 
-	append (target) {
+	prependTo (target) {
+		target.prepend(...this.__ELEMENTS);
+		return this;
+	}
+
+	prepend (element) {
+		this.each(el => el.prepend(element));
+		return this;
+	}
+
+	appendTo (target) {
 		target.append(...this.__ELEMENTS);
 		return this;
 	}
+
+	append (element) {
+		this.each(el => el.append(element));
+		return this;
+	}
 }
+
+export default new Just();
