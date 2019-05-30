@@ -7,31 +7,21 @@ Want to select that element? Just select it. Want to style that element? Just st
 
 - [just.js](#justjs)
 	- [Glossary](#glossary)
-	- [Getting started](#getting-started)
+	- [Just Get started](#just-get-started)
 	- [Docs](#docs)
-		- [<code>new Just( value? ) -> just</code>](#codenew-just-value----justcode)
-		- [<code>just.create ( HTMLString ) -> just</code>](#codejustcreate--htmlstring----justcode)
-		- [<code>just.select ( value ) -> just</code>](#codejustselect--value----justcode)
-		- [<code>just.style ( css ) / just.css ( css ) -> just</code>](#codejuststyle--css---justcss--css----justcode)
-		- [<code>just.each ( fn ) / just.foreach ( fn ) / just.forEach ( fn )</code>](#codejusteach--fn---justforeach--fn---justforeach--fn-code)
-		- [<code>just.on ( event, fn ) / just.listen ( event, fn ) -> just</code>](#codejuston--event-fn---justlisten--event-fn----justcode)
-		- [<code>just.text ( txt ) / just.txt ( txt ) -> just</code>](#codejusttext--txt---justtxt--txt----justcode)
-		- [<code>just.html ( html ) -> just</code>](#codejusthtml--html----justcode)
-		- [<code>just.attr ( name, value ) / just.attribute ( name, value ) -> just</code>](#codejustattr--name-value---justattribute--name-value----justcode)
-		- [<code>just.append ( target ) -> just</code>](#codejustappend--target----justcode)
-	- [Q&A](#qa)
-		- [Is it me, or is this just a less featured jQuery?](#is-it-me-or-is-this-just-a-less-featured-jquery)
-		- [Why not use jQuery instead of this?](#why-not-use-jquery-instead-of-this)
-		- [Did you just call jQuery stupid?!](#did-you-just-call-jquery-stupid)
+		- [<code>Just.set ( string: key, any: value ) -> this</code>](#codejustset--string-key-any-value----thiscode)
+		- [<code>Just.plugin ( value ) / Just.custom ( value ) -> this</code>](#codejustplugin--value---justcustom--value----thiscode)
+		- [<code>Just.render ( string ) -> new JustSelection</code>](#codejustrender--string----new-justselectioncode)
+		- [<code>Just.select ( string|Iterable\<HTMLElement\>: values ) -> new JustSelection</code>](#codejustselect--stringiterablehtmlelement-values----new-justselectioncode)
+		- [Internal classes](#internal-classes)
 - [License](#license)
 
 </details>
 
-## Getting started
+## Just Get started
 It's just an es6 module, so use `import` to _import_ it:
 ```js
-import Just from "just.js"; //Or use just.min.js
-const just = new Just();
+import just from "just.js";
 ```
 Then just do what you want:
 ```js
@@ -43,9 +33,9 @@ just
 
 //Creating a link
 just
-	.create("<a></a>")
-	.text("Click here!")
-	.attribute("href", "https://shadylink.com");
+  .create("<a></a>")
+  .text("Click here!")
+  .attribute("href", "https://shadylink.com");
 ```
 <br/>
 <br/>
@@ -54,53 +44,30 @@ just
 <br/>
 
 ## Docs
-To begin, just instantiate the Just class:
-### <code>new Just( value? ) -> just</code>
-Creates a new instance, and if you provide an element or selector (as `value`), it will call [`just.select`](#justselect--value----just) with that value internally.
+⚠️ _The docs describe the type before the name of an argument: `prototype.method ( type: name ) -> returnValue`_
 
-### <code>just.create ( HTMLString ) -> just</code>
-Just creates an element from an HTML string. Returns the current `Just`-instance.
+⚠️ _Any typing in this documentation is not enforced -- it serves merely as a guideline._
 
-### <code>just.select ( value ) -> just</code>
-Just selects elements. Provide either a css-selector or an actual DOMElement as `value`. Returns the current `Just`-instance.
+### <code>Just.set ( string: key, any: value ) -> this</code>
+Just sets a property on the global Just-instance. Currently, this does not pass userdata to any [internal classes](#internal-classes).
 
-### <code>just.style ( css ) / just.css ( css ) -> just</code>
-Just styles all currently selected elements. Returns the current `Just`-instance.
+### <code>Just.plugin ( value ) / Just.custom ( value ) -> this</code>
+Registers a plugin
 
-### <code>just.each ( fn ) / just.foreach ( fn ) / just.forEach ( fn )</code>
-Just runs `fn` _for each_ currently selected element. Returns the current `Just`-instance.
+### <code>Just.render ( string ) -> new JustSelection</code>
+Just renders an element from a string. [Returns a new `JustSelection`-instance.](docs/JustSelection.md) Just uses it's own HTML renderer by default. You can specify another renderer using `Just.set("renderer", ...)`.
 
-### <code>just.on ( event, fn ) / just.listen ( event, fn ) -> just</code>
-Just adds an event listener to all currently selected elements. Returns the current `Just`-instance.
+Shameless plug: [take a look at better-templates renderer](). It is one of the repositories in [the better-frontend series](./) which I made specifically to use with Just.js, or as a standalone CLI.
 
-### <code>just.text ( txt ) / just.txt ( txt ) -> just</code>
-Just sets the _innerText_ of all currently selected elements to `txt`. Returns the current `Just`-instance.
+### <code>Just.select ( string|Iterable\<HTMLElement\>: values ) -> new JustSelection</code>
+Just selects elements. Provide either a css-selector or an actual DOMElement as `values`. Returns a new [`JustSelection`-instance.](docs/JustSelection.md)
 
-### <code>just.html ( html ) -> just</code>
-Just sets the _innerHTML_ of all currently selected elements to `HTML`. Returns the current `Just`-instance.
+### Internal classes
+- [JustSelection](docs/JustSelection.md)
+- [JustClasses](docs/JustClasses.md)
+- [JustAttributes](docs/JustAttributes.md)
+- [JustDataset](docs/JustDataset.md)
 
-### <code>just.attr ( name, value ) / just.attribute ( name, value ) -> just</code>
-Just sets the attribute `name` to `value` of all currently selected elements. Returns the current `Just`-instance.
-
-### <code>just.append ( target ) -> just</code>
-Just appends all currently selected elements to `target`. Returns the current `Just`-instance.
-<br/>
-<br/>
-<br/>
-
----
-<br/>
-
-## Q&A
-### Is it me, or is this just a less featured jQuery?
-Yup - or jQuery is just too featured.
-
-### Why not use jQuery instead of this?
-Because jQuery does too much and is stupid.
-
-### Did you just call jQuery stupid?!
-Yeah but it was _just_ a joke :(
-<br/>
 <br/>
 <br/>
 
