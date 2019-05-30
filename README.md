@@ -66,7 +66,7 @@ Just sets a property on the global Just-instance. This does not pass userdata to
 <br/>
 
 ### <code>Just.plugin / Just.custom ( function: plugin, string: name? ) -> this</code>
-Registers a plugin. A plugin is a function that can be called on every instance of any [internal classes](#internal-classes). Providing a name is optional, because it can be infered from a function (given that you don't provide an anonymous function and no name). When providing a named function, the `this`-value will be that of the current internal class, allowing you to call other built-in methods from it:
+Registers a plugin. A plugin is a function that can be called on every instance of any [internal classes](#internal-classes). Providing a name is optional, because it can be inferred from a function (given that you don't provide an anonymous function and no name). When providing a named function, the `this`-value will be that of the current internal class, allowing you to call other built-in methods from it:
 ```js
 just
   .plugin(function logEachTagName () {
