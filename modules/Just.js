@@ -21,11 +21,9 @@ export default class Just {
 	}
 
 	custom (...args) { return this.custom(...args); }
-	plugin (name, lambda) {
-		if (lambda === undefined) {
-			lambda = name;
+	plugin (lambda, name) {
+		if (name === undefined)
 			name = lambda.name;
-		}
 		this._privates._plugins.set(name, lambda);
 		return this;
 	}
