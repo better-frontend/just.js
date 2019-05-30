@@ -55,7 +55,7 @@ just.render(`
 <br/>
 
 ## Docs
-⚠️ _The docs describe the type before the name of an argument: `prototype.method ( type: name ) -> returnValue`_
+⚠️ _The docs describe the type before the name of an argument:<br/>`prototype.method ( type: name ) -> returnValue`_
 
 ⚠️ _Any typing in this documentation is not enforced -- it serves merely as a guideline._
 
