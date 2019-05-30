@@ -25,7 +25,7 @@ import just from "just.js";
 ```
 Then just do what you want:
 ```js
-//Creating a link
+//Creating a weird link
 just.render("a")
   .style("color: red;")
   .text("Click here!")
@@ -44,8 +44,9 @@ just.render(`
     a
       colour: red;
       :hover
-        colour: lighten(red, 10%);
-`);
+        colour: lighten(red, 10%);`)
+  .on("click", event => {
+    event.target.remove()});
 ```
 <br/>
 <br/>
