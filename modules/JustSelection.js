@@ -177,6 +177,10 @@ export default class JustSelection {
 	//Singular properties
 	//	Made to work with the JustSelection, but should only be called on one element.
 	//	Using it for multiple elements may cause unexpected things.
+	get value () {
+		return this.elements[0].value;
+	}
+
 	get contenteditable () { return this.contentEditable; }
 	get contentEditable () {
 		return this.map(element => element.contentEditable).elements[0];
