@@ -13,15 +13,24 @@ Want to select that element? Just select it. Want to style that element? Just st
 		- [<code>Just.plugin / Just.custom ( function: plugin, string: name? ) -> this</code>](#codejustplugin--justcustom--function-plugin-string-name----thiscode)
 		- [<code>Just.render ( string: template ) -> new JustSelection</code>](#codejustrender--string-template----new-justselectioncode)
 		- [<code>Just.select ( string|Iterable\<HTMLElement\>: values ) -> new JustSelection</code>](#codejustselect--stringiterablehtmlelement-values----new-justselectioncode)
+		- [<code>Just.http -> Just.requester</code>](#codejusthttp---justrequestercode)
 		- [Internal classes](#internal-classes)
 - [License](#license)
 
 </details>
 
 ## Just Get started
+Install the library and its dependencies:
+```shell
+npm i maanlamp/just.js;
+npm i;
+```
+
 It's just an es6 module, so use `import` to _import_ it:
 ```js
 import just from "just.js";
+//Or import the minified version
+import just from "just.min.js";
 ```
 Then just do what you want:
 ```js
@@ -97,11 +106,23 @@ Just selects elements. Provide either a css-selector or an iterable containing `
 <br/>
 <br/>
 
+### <code>Just.http -> Just.requester</code>
+Returns the requester to use for HTTP-requests. [The default requester is Just.js' own](docs/JustHTTP.md), but you can use another as follows:
+```js
+//To use, for example, the axios API, just override
+//  the default requester.
+just.set("requester", axios);
+```
+<br/>
+<br/>
+<br/>
+
 ### Internal classes
 - [JustSelection](docs/JustSelection.md) (0% done)
 - [JustClasses](docs/JustClasses.md) (0% done)
 - [JustAttributes](docs/JustAttributes.md) (0% done)
 - [JustDataset](docs/JustDataset.md) (0% done)
+- [JustHTTP](docs/JustHTTP.md) (0% done)
 
 <br/>
 <br/>
