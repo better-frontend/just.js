@@ -22,7 +22,7 @@ Want to select that element? Just select it. Want to style that element? Just st
 ## Just Get started
 Install the library and its dependencies:
 ```shell
-npm i maanlamp/just.js;
+npm i better-frontend/just.js;
 npm i;
 ```
 
