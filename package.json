@@ -1,0 +1,25 @@
+{
+  "name": "just.js",
+  "version": "1.0.0",
+  "description": "A library to just get your frontend done",
+  "main": "just.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "build": "npx terser-folder modules -eo minified -x .js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maanlamp/just.js.git"
+  },
+  "author": "maanlamp",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maanlamp/just.js/issues"
+  },
+  "homepage": "https://github.com/maanlamp/just.js#readme",
+  "devDependencies": {
+    "terser-folder": "^2.0.0"
+  }
+}

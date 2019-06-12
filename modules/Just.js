@@ -5,21 +5,23 @@ import JustSelection from "./dom/JustSelection.js";
 import JustHTTP from "./http/JustHTTP.js";
 
 export default class Just {
-	_privates = {
-		_plugins: new Map(),
-		renderer (string) {
-			let element;
-			if (!string.startsWith("<")) {
-				element = element.createElement(string);
-			} else {
-				const div = element.createElement("div");
-				div.innerHTML = string;
-				element = div.children;
-				div.remove();
-			}
-			return element;
-		},
-		requester: new JustHTTP(this)
+	constructor () {
+		this._privates = {
+			_plugins: new Map(),
+			renderer (string) {
+				let element;
+				if (!string.startsWith("<")) {
+					element = element.createElement(string);
+				} else {
+					const div = element.createElement("div");
+					div.innerHTML = string;
+					element = div.children;
+					div.remove();
+				}
+				return element;
+			},
+			requester: new JustHTTP(this)
+		}
 	}
 
 	custom (...args) { return this.custom(...args); }
