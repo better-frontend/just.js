@@ -1,9 +1,11 @@
 "use strict";
 "hide implementation";
 
-export default class JustAttribute {
+import JustInternal from "../JustInternal.js";
+
+export default class JustAttribute extends JustInternal {
 	constructor (selection) {
-		this.selection = selection;
+		super(selection);
 		this._memory = new Map();
 	}
 
@@ -48,10 +50,5 @@ export default class JustAttribute {
 		// return this.selection.elements
 		// 	.map(element => Object.entries(element.dataset))
 		// 	.flat();
-	}
-
-	back () { return this.exit(); }
-	exit () {
-		return this.selection;
 	}
 }

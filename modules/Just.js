@@ -1,23 +1,25 @@
 "use strict";
 "hide implementation";
 
-import JustSelection from "./JustSelection.js";
+import JustSelection from "./dom/JustSelection.js";
+import JustHTTP from "./http/JustHTTP.js";
 
 export default class Just {
 	_privates = {
 		_plugins: new Map(),
 		renderer (string) {
-			let creation;
+			let element;
 			if (!string.startsWith("<")) {
-				creation = document.createElement(string);
+				element = element.createElement(string);
 			} else {
-				const div = document.createElement("div");
+				const div = element.createElement("div");
 				div.innerHTML = string;
-				creation = div.children;
+				element = div.children;
 				div.remove();
 			}
-			return creation;
-		}
+			return element;
+		},
+		requester: new JustHTTP(this)
 	}
 
 	custom (...args) { return this.custom(...args); }
@@ -38,13 +40,18 @@ export default class Just {
 	}
 
 	select (selector) {
-		if (typeof selector !== "string" && selector[Symbol.iterator])
-			return new JustSelection(selector, {
+		if (selector instanceof Node)
+			return new JustSelection([selector], {
 				justInstance: this,
 				parent: this
-			})
-		else
+			});
+		else if (typeof selector === "string")
 			return new JustSelection(document.querySelectorAll(selector), {
+				justInstance: this,
+				parent: this
+			});
+		else if (selector[Symbol.iterator])
+			return new JustSelection(selector, {
 				justInstance: this,
 				parent: this
 			});
@@ -52,5 +59,9 @@ export default class Just {
 
 	render (string) {
 		return new JustSelection(this, this._privates.renderer(string));
+	}
+
+	get http () {
+		return this._privates.requester;
 	}
 }

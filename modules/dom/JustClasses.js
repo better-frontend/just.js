@@ -1,9 +1,11 @@
 "use strict";
 "hide implementation";
 
-export default class JustClass {
+import JustInternal from "../JustInternal.js";
+
+export default class JustClass extends JustInternal {
 	constructor (selection) {
-		this.selection = selection;
+		super(selection);
 	}
 
 	add (name) {
@@ -45,10 +47,5 @@ export default class JustClass {
 		return this.selection.elements
 			.map(element => Array.from(element.classList))
 			.flat();
-	}
-
-	back (...args) { return this.exit(...args); }
-	exit () {
-		return this.selection;
 	}
 }
