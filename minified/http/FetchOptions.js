@@ -1,0 +1,1 @@
+export default class FetchOptions{constructor({method:e,headers:r={},body:t,mode:i,credentials:s,cache:h,redirect:c,referrer:d,referrerPolicy:a,integrity:o,keepalive:l,signal:n}={}){this.method=e,this.headers=r,this.body=t,this.mode=i,this.credentials=s,this.cache=h,this.redirect=c,this.referrer=d,this.referrerPolicy=a,this.integrity=o,this.keepalive=l,this.signal=n}}

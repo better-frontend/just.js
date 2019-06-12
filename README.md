@@ -20,10 +20,13 @@ Want to select that element? Just select it. Want to style that element? Just st
 </details>
 
 ## Just Get started
-Install the library and its dependencies:
-```shell
-npm i better-frontend/just.js;
-```
+Download the repo at the top right:
+
+![An image of a download button](./download.png)
+
+And extract it into the repo you want to use it in.
+
+⚠️ _Because es-modules are inherently spread across files, there is no easy way to just host the entry file (as far as I know), therefore you have to install the library yourself. Luckily HTTP2 makes up for the hassle by allowing blazingly fast parallel downloads!_
 
 It's just an es6 module, so use `import` to _import_ it:
 ```js
