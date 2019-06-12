@@ -33,7 +33,8 @@ just.render("a")
   .on("click", event => {
     event.target.remove()});
 
-//Creating the same link with better-templates and better-stylesheets
+//Creating the same(-ish) link with better-templates
+//  and better-stylesheets
 //https://github.com/better-frontend/better-templates
 //https://github.com/better-frontend/better-stylesheets
 just.render(`

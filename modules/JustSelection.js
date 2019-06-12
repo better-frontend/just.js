@@ -187,8 +187,8 @@ export default class JustSelection {
 	}
 
 	get visible () {
-		//Prevent switching !undefined to true
-		return (this.hidden === false)
+		//Prevent switching undefined to true
+		return (Boolean(this.hidden) === this.hidden)
 			? !this.hidden
 			: this.hidden;
 	}
