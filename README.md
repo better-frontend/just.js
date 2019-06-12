@@ -23,7 +23,6 @@ Want to select that element? Just select it. Want to style that element? Just st
 Install the library and its dependencies:
 ```shell
 npm i better-frontend/just.js;
-npm i;
 ```
 
 It's just an es6 module, so use `import` to _import_ it:
