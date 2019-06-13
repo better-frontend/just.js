@@ -1,1 +1,1 @@
-import justHTTPGet from"./JustHTTPGet.js";export default class JustHTTP{constructor(t){this.justInstance=t}GET(...t){return this.get(...t)}get(t){return new justHTTPGet(this.justInstance,t,{method:"GET"})}}
+import justHTTPGet from"./JustHTTPGet.js";import JustHTTPPost from"./JustHTTPPost.js";export default class JustHTTP{constructor(t){this.justInstance=t}GET(...t){return this.get(...t)}get(t){return new justHTTPGet(this.justInstance,t,{method:"GET"})}POST(...t){return this.post(...t)}post(t){return new JustHTTPPost(this.justInstance,t,{method:"POST"})}}
