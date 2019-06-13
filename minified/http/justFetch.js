@@ -1,0 +1,1 @@
+export default async function justFetch(t,c){const e=await fetch(t,c);if(!e.ok)throw e;return e}

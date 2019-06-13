@@ -1,4 +1,5 @@
 import FetchOptions from "./FetchOptions.js";
+import justFetch from "./justFetch.js"
 
 export default class JustHTTPPost {
 	constructor (justInstance, url, options) {
@@ -6,15 +7,6 @@ export default class JustHTTPPost {
 		this.url = url;
 		this.options = new FetchOptions();
 		Object.assign(this.options, options);
-	}
-
-	static async fetch (url, options) {
-		const response = await fetch(url, options);
-
-		if (!response.ok)
-			throw response;
-
-		return response;
 	}
 
 	async json (json) {
@@ -28,7 +20,16 @@ export default class JustHTTPPost {
 
 		this.options.body = body;
 
-		const res = await JustHTTPPost.fetch(this.url, this.options);
+		const res = await justFetch(this.url, this.options);
+		const contentType = res.headers.get("content-type") || "";
+		if (contentType.match(/json/))
+			return res.json();
+		else if (contentType.match(/xml|html/))
+			return this.justInstance.select((new DOMParser).parseFromString(await res.text()));
+		else if (contentType.match(/plain/))
+			return res.text();
+
+		//Didn't match any known content types, just give back res.
 		return res;
 	}
 }
