@@ -9,8 +9,8 @@ export default class JustHTTP {
 		this.justInstance = justInstance;
 
 		//Delegate plugins (should probably allow separate just and http plugins)
-		for (const [name, plugin] of justInstance._privates._plugins)
-			Object.defineProperty(this, name, { value: plugin });
+		// for (const [name, plugin] of justInstance._privates._plugins)
+		// 	Object.defineProperty(this, name, { value: plugin });
 	}
 
 	GET (...args) { return this.get(...args); }
