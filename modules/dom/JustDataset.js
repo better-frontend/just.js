@@ -1,32 +1,32 @@
 "use strict";
 "hide implementation";
 
-import JustInternal from "../JustInternal.js";
+import JustBackable from "../JustBackable.js";
 
-export default class JustData extends JustInternal {
-	constructor (selection) {
-		super(selection);
+export default class JustData extends JustBackable {
+	constructor (justInstance) {
+		super(justInstance._plugins, justInstance.elements);
 	}
 
 	replace (...args) { return this.set(...args); }
 	add     (...args) { return this.set(...args); }
 	set     (name, value) {
-		this.selection.each(element => element.dataset[name] = value);
+		this.elements.each(element => element.dataset[name] = value);
 		return this;
 	}
 
 	delete (name) { return this.remove(name); }
 	remove (name) {
-		this.selection.each(element => element.removeAttribute(`data-${name}`));
+		this.elements.each(element => element.removeAttribute(`data-${name}`));
 		return this;
 	}
 
 	get (name) {
-		return this.selection.map(element => element.getAttribute(`data-${name}`));
+		return this.elements.map(element => element.getAttribute(`data-${name}`));
 	}
 
 	contains (name) {
-		return this.selection.elements.some(element => element.dataset[name] !== undefined);
+		return this.elements.elements.some(element => element.dataset[name] !== undefined);
 	}
 
 	toggle (name, value = "true") {
@@ -37,7 +37,7 @@ export default class JustData extends JustInternal {
 	}
 
 	clear () {
-		this.selection.each(element => {
+		this.elements.each(element => {
 			for (const key in element.dataset)
 				element.removeAttribute(`data-${key}`);
 		});
@@ -46,7 +46,7 @@ export default class JustData extends JustInternal {
 
 	all  (...args) { return this.list(...args); }
 	list () {
-		return this.selection.elements
+		return this.elements.elements
 			.map(element => Object.entries(element.dataset))
 			.flat();
 	}

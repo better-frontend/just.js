@@ -4,24 +4,16 @@
 import JustClasses from "./JustClasses.js";
 import JustDataset from "./JustDataset.js";
 import JustAttributes from "./JustAttributes.js";
+import JustBackable from "../JustBackable.js";
 
-export default class JustSelection {
-	constructor (elements, {
-		justInstance,
-		parent
-	}) {
+export default class JustSelection extends JustBackable {
+	constructor (elements, justInstance) {
+		const superElements = (elements[Symbol.iterator] === undefined)
+			? [elements]
+			: Array.from(elements);
+		super(justInstance._plugins, superElements);
+
 		this.justInstance = justInstance;
-		this.parent = parent;
-
-		//Make sure the selected objects are iterable
-		if (elements[Symbol.iterator] === undefined)
-			this.elements = [elements];
-		else
-			this.elements = Array.from(elements);
-
-		//Delegate plugins
-		for (const [name, plugin] of justInstance._privates._plugins)
-			Object.defineProperty(this, name, { value: plugin });
 	}
 
 	[Symbol.iterator] () { return this.elements[Symbol.iterator](); }
@@ -34,20 +26,9 @@ export default class JustSelection {
 
 	select (selector) {
 		if (typeof selector !== "string" && selector[Symbol.iterator])
-			return new JustSelection(selector, {
-				justInstance: this.justInstance,
-				parent: this
-			});
+			return new JustSelection(selector, this);
 		else
-			return new JustSelection(this.elements.map(element => Array.from(element.querySelectorAll(selector))).flat(), {
-				justInstance: this.justInstance,
-				parent: this
-			});
-	}
-
-	back (...args) { return this.exit(...args); }
-	exit () {
-		return this.parent;
+			return new JustSelection(this.elements.map(element => Array.from(element.querySelectorAll(selector))).flat(), this);
 	}
 
 	css   (...args) { return this.style(...args); }

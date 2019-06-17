@@ -3,37 +3,18 @@
 
 import JustSelection from "./dom/JustSelection.js";
 import JustHTTP from "./http/JustHTTP.js";
+import justRenderer from "./dom/justRenderer.js";
+import JustHasPlugins from "./JustHasPlugins.js";
 
-export default class Just {
+export default class Just extends JustHasPlugins {
 	constructor () {
-		this._privates = {
-			_plugins: new Map(),
-			renderer (string) {
-				let element;
-				if (!string.startsWith("<")) {
-					element = document.createElement(string);
-				} else {
-					const div = document.createElement("div");
-					div.innerHTML = string;
-					element = div.children;
-					div.remove();
-				}
-				return element;
-			},
-			requester: new JustHTTP(this)
-		}
-	}
-
-	custom (...args) { return this.custom(...args); }
-	plugin (lambda, name) {
-		if (name === undefined)
-			name = lambda.name;
-		this._privates._plugins.set(name, lambda);
-		return this;
+		super();
+		this.requester = new JustHTTP(this);
+		this.renderer = justRenderer;
 	}
 
 	set (key, value) {
-		Object.defineProperty(this._privates, key, {
+		Object.defineProperty(this, key, {
 			value,
 			configurable: true,
 			enumerable: false
@@ -43,27 +24,18 @@ export default class Just {
 
 	select (selector) {
 		if (selector instanceof Node)
-			return new JustSelection([selector], {
-				justInstance: this,
-				parent: this
-			});
+			return new JustSelection([selector], this);
 		else if (typeof selector === "string")
-			return new JustSelection(document.querySelectorAll(selector), {
-				justInstance: this,
-				parent: this
-			});
+			return new JustSelection(document.querySelectorAll(selector), this);
 		else if (selector[Symbol.iterator])
-			return new JustSelection(selector, {
-				justInstance: this,
-				parent: this
-			});
+			return new JustSelection(selector, this);
 	}
 
 	render (string) {
-		return new JustSelection(this, this._privates.renderer(string));
+		return new JustSelection(this, this.renderer(string));
 	}
 
 	get http () {
-		return this._privates.requester;
+		return this.requester;
 	}
 }
