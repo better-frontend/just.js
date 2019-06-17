@@ -1,3 +1,6 @@
+"use strict";
+"hide implementation";
+
 import FetchOptions from "./FetchOptions.js";
 import justFetch from "./justFetch.js";
 

@@ -1,3 +1,6 @@
+"use strict";
+"hide implementation";
+
 export default class FetchOptions {
 	constructor ({
 		method,

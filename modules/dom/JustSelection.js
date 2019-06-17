@@ -12,6 +12,8 @@ export default class JustSelection {
 	}) {
 		this.justInstance = justInstance;
 		this.parent = parent;
+
+		//Make sure the selected objects are iterable
 		if (elements[Symbol.iterator] === undefined)
 			this.elements = [elements];
 		else
@@ -71,8 +73,9 @@ export default class JustSelection {
 		return this.select(this.elements.map(lambda));
 	}
 
-	on (...args) { return this.listen(...args); }
-	listen (event, handler) {
+	on     (...args) { return this.addEventListener(...args); }
+	listen (...args) { return this.addEventListener(...args); }
+	addEventListener (event, handler) {
 		//get?/set
 		return this.each(element => element.addEventListener(event, handler));
 	}
@@ -122,7 +125,7 @@ export default class JustSelection {
 	}
 
 	append (...elements) {
-		if (typeof element === "string")
+		if (elements.length === 1 && typeof elements[0] === "string")
 			return this.map(element => element.append(justInstance.render(element)));
 		else
 			return this.map(element => element.append(...elements)); //This probably doesnt work, since they won't be copied/cloned.
@@ -133,7 +136,7 @@ export default class JustSelection {
 	}
 
 	prepend (...elements) {
-		if (typeof element === "string")
+		if (elements.length === 1 && typeof elements[0] === "string")
 			return this.map(element => element.prepend(justInstance.render(element)));
 		else
 			return this.map(element => element.prepend(...elements)); //This probably doesnt work, since they won't be copied/cloned.
@@ -183,11 +186,11 @@ export default class JustSelection {
 
 	get contenteditable () { return this.contentEditable; }
 	get contentEditable () {
-		return this.map(element => element.contentEditable).elements[0];
+		return this.elements[0].contentEditable;
 	}
 
 	get hidden () {
-		return this.map(element => element.hidden).elements[0];
+		return this.elements[0].hidden;
 	}
 
 	get visible () {
@@ -198,32 +201,33 @@ export default class JustSelection {
 	}
 
 	get offset () {
-		return this.map(element => ({
+		const element = this.elements[0];
+		return {
 			height: element.offsetHeight,
 			left: element.offsetLeft,
 			top: element.offsetTop,
 			width: element.offsetWidth,
 			parent: element.offsetParent,
-		})).elements[0];
+		};
 	}
 
 	get offsetHeight () {
-		return this.map(element => element.offsetHeight).elements[0];
+		return this.elements.offsetHeight[0];
 	}
 
 	get offsetLeft () {
-		return this.map(element => element.offsetLeft).elements[0];
+		return this.elements.offsetLeft[0];
 	}
 
 	get offsetTop () {
-		return this.map(element => element.offsetTop).elements[0];
+		return this.elements.offsetTop[0];
 	}
 
 	get offsetWidth () {
-		return this.map(element => element.offsetWidth).elements[0];
+		return this.elements.offsetWidth[0];
 	}
 
 	get offsetParent () {
-		return this.map(element => element.offsetParent).elements[0];
+		return this.elements.offsetParent[0];
 	}
 }

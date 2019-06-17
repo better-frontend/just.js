@@ -1,3 +1,6 @@
+"use strict";
+"hide implementation";
+
 export default async function justFetch (url, options) {
 	const response = await fetch(url, options);
 

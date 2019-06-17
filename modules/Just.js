@@ -11,9 +11,9 @@ export default class Just {
 			renderer (string) {
 				let element;
 				if (!string.startsWith("<")) {
-					element = element.createElement(string);
+					element = document.createElement(string);
 				} else {
-					const div = element.createElement("div");
+					const div = document.createElement("div");
 					div.innerHTML = string;
 					element = div.children;
 					div.remove();
