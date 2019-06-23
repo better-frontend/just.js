@@ -4,16 +4,15 @@
 import JustClasses from "./JustClasses.js";
 import JustDataset from "./JustDataset.js";
 import JustAttributes from "./JustAttributes.js";
-import JustBackable from "../JustBackable.js";
+import JustHasPlugins from "../JustHasPlugins.js";
 
-export default class JustSelection extends JustBackable {
+export default class JustSelection extends JustHasPlugins {
 	constructor (elements, justInstance) {
-		const superElements = (elements[Symbol.iterator] === undefined)
+		super(justInstance);
+		this.justInstance = justInstance;
+		this.elements = (elements[Symbol.iterator] === undefined)
 			? [elements]
 			: Array.from(elements);
-		super(justInstance._plugins, superElements);
-
-		this.justInstance = justInstance;
 	}
 
 	[Symbol.iterator] () { return this.elements[Symbol.iterator](); }
@@ -88,6 +87,8 @@ export default class JustSelection extends JustBackable {
 		else
 			return this.attributes.set(name, value);
 	}
+
+	get attrs      () { return this.attributes; }
 	get attributes () {
 		return new JustAttributes(this);
 	}
@@ -108,19 +109,22 @@ export default class JustSelection extends JustBackable {
 	append (...elements) {
 		if (elements.length === 1 && typeof elements[0] === "string")
 			return this.map(element => element.append(justInstance.render(element)));
-		else
-			return this.map(element => element.append(...elements)); //This probably doesnt work, since they won't be copied/cloned.
+		else if (elements.every(element => element instanceof JustSelection)){console.log(elements)
+			return this.map(element => element.append(...elements.map(selection => selection.elements)));}
 	}
 
 	appendTo (target) {
-		target.append(...this.elements);
+		if (elements.length === 1 && typeof elements[0] === "string")
+			return this.justInstance.select(target).append(...this.elements)
+		else
+			return target.append(...this.elements);
 	}
 
 	prepend (...elements) {
 		if (elements.length === 1 && typeof elements[0] === "string")
 			return this.map(element => element.prepend(justInstance.render(element)));
-		else
-			return this.map(element => element.prepend(...elements)); //This probably doesnt work, since they won't be copied/cloned.
+			else if (elements.every(element => element instanceof JustSelection))
+			return this.map(element => element.prepend(...elements.map(selection => selection.elements)));
 	}
 
 	prependTo (target) {

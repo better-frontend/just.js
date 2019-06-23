@@ -1,6 +1,6 @@
 export default class JustHasPlugins {
-	constructor (plugins = []) {
-		this._plugins = new Map(plugins);
+	constructor (justInstance = {}) {
+		this._plugins = new Map(justInstance._plugins || []);
 
 		//Delegate plugins
 		for (const [name, plugin] of this._plugins)

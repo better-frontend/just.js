@@ -32,7 +32,7 @@ export default class Just extends JustHasPlugins {
 	}
 
 	render (string) {
-		return new JustSelection(this, this.renderer(string));
+		return new JustSelection(this.renderer(string), this);
 	}
 
 	get http () {

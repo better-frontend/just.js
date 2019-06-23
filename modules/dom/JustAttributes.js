@@ -1,11 +1,14 @@
 "use strict";
 "hide implementation";
 
-import JustBackable from "../JustBackable.js";
-
-export default class JustAttribute extends JustBackable {
+export default class JustAttribute {
 	constructor (justInstance) {
-		super(justInstance._plugins, justInstance.elements);
+		this.justInstance = justInstance
+	}
+
+	back () { return this.exit(); }
+	exit () {
+		return this.justInstance;
 	}
 
 	replace (...args) { return this.set(...args); }

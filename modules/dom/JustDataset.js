@@ -1,21 +1,24 @@
 "use strict";
 "hide implementation";
 
-import JustBackable from "../JustBackable.js";
-
-export default class JustData extends JustBackable {
+export default class JustData {
 	constructor (justInstance) {
-		super(justInstance._plugins, justInstance.elements);
+		this.justInstance = justInstance
+	}
+
+	back () { return this.exit(); }
+	exit () {
+		return this.justInstance;
 	}
 
 	replace (...args) { return this.set(...args); }
 	add     (...args) { return this.set(...args); }
-	set     (name, value) {
+	set     (name, value = "true") {
 		this.elements.each(element => element.dataset[name] = value);
 		return this;
 	}
 
-	delete (name) { return this.remove(name); }
+	delete (...args) { return this.remove(...args); }
 	remove (name) {
 		this.elements.each(element => element.removeAttribute(`data-${name}`));
 		return this;
