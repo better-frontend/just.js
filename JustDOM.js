@@ -1,6 +1,6 @@
 "use strict";
 
-import { assert } from "./util.js";
+import { assert, safeToString } from "./util.js";
 import JustSelection from "./JustSelection.js";
 
 const queryChars = /[\[\*\>\+\~\.\|\#]/g;
@@ -43,12 +43,14 @@ export default class JustDOM {
 			: "getElementByTagName"](tagname))
 	}
 	
-	static selectFunction (fun, options) {
+	static selectFunction (fun, options = { all: true }) {
 		assert(
 			`Please provide a function, not "${fun}"`,
 			() => typeof fun === "function");
 
-		return JustDOM.selectAll().filter(fun);
+		return (options.all === true)
+			? JustDOM.selectAll().filter(fun)
+			: new JustSelection(JustDom.selectAll().filter(fun).asArray[0]);
 	}
 	
 	static selectQuery (selector, options = { all: true }) {
@@ -68,16 +70,20 @@ export default class JustDOM {
 
 		if (by === "*")
 			return JustDOM.selectAll();
-		else if (by.startsWith("#"))
-			return JustDOM.selectId(by.slice(1), options);
-		else if (by.startsWith("."))
-			return JustDOM.selectClass(by.slice(1), options);
-		else if (typeof by === "string" && queryChars.test(by))
-			return JustDOM.selectQuery(by, options);
-		else if (typeof by === "string")
-			return JustDOM.selectTag(by, options);
+		else if (typeof by === "function")
+			return JustDOM.selectFunction(by, options);
+		else if (typeof by === "string") {
+			if (by.startsWith("#"))
+				return JustDOM.selectId(by.slice(1), options);
+			else if (by.startsWith("."))
+				return JustDOM.selectClass(by.slice(1), options);
+			else if (queryChars.test(by))
+				return JustDOM.selectQuery(by, options);
+			else
+				return JustDOM.selectTag(by, options);
+		}
 		
-		else throw `Unsupported argument ${typeof by} "${by}"`;
+		else throw `Unsupported argument ${typeof by} "${safeToString(by)}"`;
 	}
 
 }

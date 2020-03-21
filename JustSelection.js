@@ -14,6 +14,11 @@ export default class JustSelection {
 		this.#elements = ensureArray(elements);
 	}
 
+	*[Symbol.iterator] () {
+		for (const element of this.#elements)
+			yield element;
+	}
+
 	get classes () {
 		return new JustClasses(this);
 	}
@@ -49,7 +54,7 @@ export default class JustSelection {
 	}
 
 	each (fun) {
-		for (const element of this.#elements)
+		for (const element of this)
 			fun(element);
 		return this;
 	}

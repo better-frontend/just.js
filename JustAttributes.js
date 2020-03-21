@@ -12,6 +12,11 @@ export default class JustAttributes {
 		this.#attributes = selection.asArray.map(element => ensureArray(element.attributes)).flat();
 	}
 
+	*[Symbol.iterator] () {
+		for (const attribute of this.#attributes)
+			yield attribute;
+	}
+
 	get length () {
 		return this.#attributes.length;
 	}
@@ -40,7 +45,7 @@ export default class JustAttributes {
 	}
 
 	each (fun) {
-		for (const attribute of this.#attributes)
+		for (const attribute of this)
 			fun(attribute);
 		return this;
 	}

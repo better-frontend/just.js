@@ -16,6 +16,11 @@ export default class JustClasses {
 		this.#classes = selection.asArray.map(element => ensureArray(element.classList)).flat();
 	}
 
+	*[Symbol.iterator] () {
+		for (const classname of this.#classes)
+			yield classname;
+	}
+
 	get length () {
 		return this.#classes.length;
 	}
@@ -48,7 +53,7 @@ export default class JustClasses {
 	}
 
 	each (fun) {
-		for (const classname of this.#classes)
+		for (const classname of this)
 			fun(classname);
 		return this;
 	}

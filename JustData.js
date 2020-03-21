@@ -12,6 +12,11 @@ export default class JustData {
 		this.#dataset = selection.asArray.map(element => element.dataset);
 	}
 
+	*[Symbol.iterator] () {
+		for (const datapoint of this.#dataset)
+			yield datapoint;
+	}
+
 	get length () {
 		return this.#dataset.length;
 	}
@@ -40,7 +45,7 @@ export default class JustData {
 	}
 
 	each (fun) {
-		for (const datapoint of this.#dataset)
+		for (const datapoint of this)
 			fun(datapoint);
 		return this;
 	}
