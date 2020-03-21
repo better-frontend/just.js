@@ -7,6 +7,11 @@ const ensureHttps = url =>
 
 export default class JustHTTPS {
 
+	// TODO: GET requests offer completely different
+	//	outcomes than POST or other types of requests.
+	//	- How do we ensure we support all these functions?
+	//	- Do we want to support more than GET/POST?
+	//	- Will they all require separate classes?
 	static get (url, options) {
 		return new JustResponse(
 			fetch(
