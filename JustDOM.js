@@ -82,7 +82,7 @@ export default class JustDOM {
 			else
 				return JustDOM.selectTag(by, options);
 		}
-		
+
 		else throw `Unsupported argument ${typeof by} "${safeToString(by)}"`;
 	}
 
