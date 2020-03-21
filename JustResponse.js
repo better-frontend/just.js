@@ -38,7 +38,38 @@ export default class JustResponse {
 	}
 
 	get html () {
-		return this.text.then(html => domParser.parseFromString(html, "text/html"));
+		return this.text
+			.then(html => domParser
+				.parseFromString(html, "text/html"));
+	}
+
+	get xml () {
+		return this.text
+			.then(html => domParser
+				.parseFromString(html, "application/xml"));
+	}
+
+	dsv (delimiter, options = { hasHeaders: true }) {
+		// TODO: This parser is very simple and naive
+		return this.text
+			.then(text => {
+				const entries = text
+					.split("\n")
+					.map(line => line.split(delimiter));
+				return (options.hasHeaders)
+					? entries
+							.slice(1)
+							.map(entry => entry
+								.reduce((obj, value, i) => ({
+									...obj,
+									[entries[0][i]]: value
+								}), {}))
+					: entries;
+			});
+	}
+
+	csv (options) {
+		return this.dsv(",", options);
 	}
 
 }
