@@ -1,15 +1,46 @@
 "use strict";
 
+import JustResponse from "./JustResponse.js";
+
+const ensureHttps = url =>
+	url.replace(/^(?:[a-z]+:\/\/)?/, "https://");
+
 export default class JustHTTPS {
 
-	static get () {throw `Not implemented.`;}
-	static head () {throw `Not implemented.`;}
-	static post () {throw `Not implemented.`;}
-	static put () {throw `Not implemented.`;}
-	static delete () {throw `Not implemented.`;}
-	static connect () {throw `Not implemented.`;}
-	static options () {throw `Not implemented.`;}
-	static trace () {throw `Not implemented.`;}
-	static patch () {throw `Not implemented.`;}
+	static get (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "GET" }, options)));
+	}
+
+	static head (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "HEAD" }, options)));
+	}
+
+	static post (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "POST" }, options)));
+	}
+
+	static put (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "PUT" }, options)));
+	}
+
+	static delete (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "DELETE" }, options)));
+	}
+
+	static connect (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "CONNECT" }, options)));
+	}
+
+	static options (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "OPTIONS" }, options)));
+	}
+
+	static trace (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "TRACE" }, options)));
+	}
+
+	static patch (url, options) {
+		return new JustResponse(fetch(ensureHttps(url), Object.assign({ method: "PATCH" }, options)));
+	}
 
 }

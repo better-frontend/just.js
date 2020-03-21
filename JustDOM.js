@@ -2,11 +2,14 @@
 
 import { assert } from "./util.js";
 import JustSelection from "./JustSelection.js";
-import JustHTTPS from "./JustHTTPS.js";
 
 const queryChars = /[\[\*\>\+\~\.\|\#]/g;
 
-class Just {
+export default class JustDOM {
+
+	static get root () {
+		return new JustSelection(document.documentElement);
+	}
 
 	static selectAll () {
 		return new JustSelection(document.getElementsByTagName("*"));
@@ -45,7 +48,7 @@ class Just {
 			`Please provide a function, not "${fun}"`,
 			() => typeof fun === "function");
 
-		return Just.selectAll().filter(fun);
+		return JustDOM.selectAll().filter(fun);
 	}
 	
 	static selectQuery (selector, options = { all: true }) {
@@ -64,26 +67,17 @@ class Just {
 			() => by !== undefined && by !== null);
 
 		if (by === "*")
-			return Just.selectAll();
+			return JustDOM.selectAll();
 		else if (by.startsWith("#"))
-			return Just.selectId(by.slice(1), options);
+			return JustDOM.selectId(by.slice(1), options);
 		else if (by.startsWith("."))
-			return Just.selectClass(by.slice(1), options);
+			return JustDOM.selectClass(by.slice(1), options);
 		else if (typeof by === "string" && queryChars.test(by))
-			return Just.selectQuery(by, options);
+			return JustDOM.selectQuery(by, options);
 		else if (typeof by === "string")
-			return Just.selectTag(by, options);
+			return JustDOM.selectTag(by, options);
 		
 		else throw `Unsupported argument ${typeof by} "${by}"`;
 	}
 
-	static render (template) {
-		// TODO: Implement
-		throw `Not implemented.`;
-	}
-
-	static HTTPS = JustHTTPS;
-
 }
-
-export default Just;
