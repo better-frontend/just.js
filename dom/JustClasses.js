@@ -30,7 +30,7 @@ export default class JustClasses {
 	}
 
 	add (...classes) {
-		this.#selection.each(element => element.classList.add(...classes));
+		this.#selection.each(element => element.classList.add(classes.map(classname => (typeof classname === "function") ? classname(element) : classname)));
 		this.#update();
 		return this;
 	}

@@ -44,6 +44,10 @@ export default class JustSelection {
 		return this.#elements.length;
 	}
 
+	get value () {
+		return this.map(element => element.value);
+	}
+
 	filter (fun) {
 		this.#elements = this.#elements.filter(fun);
 		return this;

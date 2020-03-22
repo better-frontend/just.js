@@ -20,27 +20,29 @@ export default class JustDOM {
 			`Please provide a (valid) id, not "${id}"`,
 			() => typeof id === "string" && id.startsWith("#"));
 
-		return new JustSelection(document.getElementById(id));
+		return new JustSelection(document.getElementById(id.slice(1)));
 	}
 
 	static selectClass (classname, options = { all: true }) {
+		// TODO: GetElement doesn't exist
 		assert(
 			`Please provide a (valid) classname, not "${classname}"`,
 			() => typeof classname === "string" && classname.startsWith("."));
 
 		return new JustSelection(document[(options.all === true)
 			? "getElementsByClassName"
-			: "getElementByClassName"](classname));
+			: "getElementByClassName"](classname.slice(1)));
 	}
 
 	static selectTag (tagname, options = { all: true }) {
+		// TODO: GetElement doesn't exist
 		assert(
 			`Please provide a (valid) tagname, not "${tagname}"`,
 			() => typeof tagname === "string");
 
 		return new JustSelection(document[(options.all === true)
-			? "getElementsByTagName"
-			: "getElementByTagName"](tagname))
+			? "getElementsByTagNameNS"
+			: "getElementByTagNameNS"](tagname))
 	}
 	
 	static selectFunction (fun, options = { all: true }) {
@@ -74,9 +76,9 @@ export default class JustDOM {
 			return JustDOM.selectFunction(by, options);
 		else if (typeof by === "string") {
 			if (by.startsWith("#"))
-				return JustDOM.selectId(by.slice(1), options);
+				return JustDOM.selectId(by, options);
 			else if (by.startsWith("."))
-				return JustDOM.selectClass(by.slice(1), options);
+				return JustDOM.selectClass(by, options);
 			else if (queryChars.test(by))
 				return JustDOM.selectQuery(by, options);
 			else

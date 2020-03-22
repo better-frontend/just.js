@@ -1,9 +1,15 @@
 "use strict";
 
+import { ensureArray } from "../util.js";
+
 export default class JustData {
 
 	#selection;
 	#dataset = [];
+
+	#update = function () {
+		this.#dataset = this.#selection.asArray.map(element => element.dataset);
+	}
 
 	constructor (selection) {
 		this.#selection = selection;
@@ -28,12 +34,14 @@ export default class JustData {
 	}
 
 	set (name, value) {
-		this.#selection.each(element => element.setAttribute(`data-${name}`, value));
+		this.#selection.each(element => element.setAttribute(`data-${name}`, (typeof value === "function") ? value(element) : value));
+		this.#update();
 		return this;
 	}
 
 	remove (name) {
 		this.#selection.each(element => element.removeAttribute(`data-${name}`));
+		this.#update();
 		return this;
 	}
 

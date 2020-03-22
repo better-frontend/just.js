@@ -7,7 +7,7 @@ export const assert = (message, ...verifiers) => {
 };
 
 export const ensureArray = value =>
-	(value[Symbol.iterator])
+	(value !== null && value !== undefined && Symbol.iterator in value)
 		? Array.from(value)
 		: ensureArray([value].flat());
 

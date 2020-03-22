@@ -7,6 +7,10 @@ export default class JustAttributes {
 	#selection;
 	#attributes = [];
 
+	#update = function () {
+		this.#attributes = this.#selection.asArray.map(element => ensureArray(element.attributes)).flat();
+	}
+
 	constructor (selection) {
 		this.#selection = selection;
 		this.#attributes = selection.asArray.map(element => ensureArray(element.attributes)).flat();
@@ -30,12 +34,14 @@ export default class JustAttributes {
 	}
 
 	set (name, value) {
-		this.#selection.each(element => element.setAttribute(name, value));
+		this.#selection.each(element => element.setAttribute(name, (typeof value === "function") ? value(element) : value));
+		this.#update();
 		return this;
 	}
 
 	remove (name) {
 		this.#selection.each(element => element.removeAttribute(name));
+		this.#update();
 		return this;
 	}
 
