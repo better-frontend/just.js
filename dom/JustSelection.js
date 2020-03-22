@@ -1,6 +1,6 @@
 "use strict";
 
-import { ensureArray } from "./util.js";
+import { ensureArray } from "../util.js";
 import JustClasses from "./JustClasses.js";
 import JustStyle from "./JustStyle.js";
 import JustData from "./JustData.js";

@@ -1,40 +1,41 @@
 "use strict";
 
+import { throwIfNotOk } from "../util.js";
+
 const domParser = new DOMParser();
-const makeUsable = (pomise, form) =>
-	pomise.then(response => {
-		if (!response.ok)
-			throw response;
-		
-		return response[form]();
-	});
+const wrapFetch = (url, type, options) =>
+	fetch(url, Object.assign(options, { method: "GET" }))
+		.then(throwIfNotOk)
+		.then(response => response[type]());
 
-export default class JustResponse {
+export default class JustGetResponse {
 
-	#request;
+	#url;
+	#options;
 
-	constructor (request) {
-		this.#request = request;
+	constructor (url, options = {}) {
+		this.#url = url;
+		this.#options = options;
 	}
 
 	get arrayBuffer () {
-		return makeUsable(this.#request, "arrayBuffer");
+		return wrapFetch(this.#url, "arrayBuffer", this.#options);
 	}
 
 	get blob () {
-		return makeUsable(this.#request, "blob");
+		return wrapFetch(this.#url, "blob", this.#options);
 	}
 
 	get formData () {
-		return makeUsable(this.#request, "formData");
+		return wrapFetch(this.#url, "formData", this.#options);
 	}
 
 	get json () {
-		return makeUsable(this.#request, "json");
+		return wrapFetch(this.#url, "json", this.#options);
 	}
 
 	get text () {
-		return makeUsable(this.#request, "text");
+		return wrapFetch(this.#url, "text", this.#options);
 	}
 
 	get html () {
@@ -70,6 +71,10 @@ export default class JustResponse {
 
 	csv (options) {
 		return this.dsv(",", options);
+	}
+
+	cancel () {
+		throw `Not implemented`;
 	}
 
 }

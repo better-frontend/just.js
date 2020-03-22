@@ -1,6 +1,6 @@
 "use strict";
 
-import { assert, safeToString } from "./util.js";
+import { assert, safeToString } from "../util.js";
 import JustSelection from "./JustSelection.js";
 
 const queryChars = /[\[\*\>\+\~\.\|\#]/g;

@@ -13,3 +13,10 @@ export const ensureArray = value =>
 
 export const safeToString = value =>
 	"" + value.toString();
+
+export const throwIfNotOk = response => {
+	if (!response.ok)
+		throw response;
+
+	return response;
+};

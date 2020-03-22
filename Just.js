@@ -1,7 +1,7 @@
 "use strict";
 
-import JustHTTPS from "./JustHTTPS.js";
-import JustDOM from "./JustDOM.js";
+import JustHTTP from "./http/JustHTTP.js";
+import JustDOM from "./dom/JustDOM.js";
 
 export default class Just {
 
@@ -18,6 +18,6 @@ export default class Just {
 	// TODO: Decide wether we only support HTTPS, or support HTTP too,
 	//	and if so: do we copy HTTPS or do we allow all other protocols?
 	//	Other protocols will probably each require a different class.
-	static https = JustHTTPS;
+	static http = JustHTTP;
 
 }

@@ -1,6 +1,6 @@
 "use strict";
 
-import { ensureArray } from "./util.js";
+import { ensureArray } from "../util.js";
 
 export default class JustAttributes {
 
